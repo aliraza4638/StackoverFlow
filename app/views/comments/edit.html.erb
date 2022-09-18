@@ -1,9 +1,9 @@
 <div>
 
   <h5 class="font-medium leading-tight text-4xl mt-0 mb-2 text-blue-600">Editing Comment</h5>
-
-  <%= render "form", post: @post, comment: @comment %>
-
+  <%= turbo_frame_tag @comment do %>
+    <%= render "form", post: @post, comment: @comment %>
+  <% end %>
   <br>
 
   <div>

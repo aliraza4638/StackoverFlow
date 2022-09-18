@@ -1,11 +1,16 @@
-<div id="<%= dom_id comment %>">
-  <p>
-    <strong>Content:</strong>
-    <%= comment.content %>
-  </p>
-  <p>
-    <%= link_to "Show", post_comment_path(comment.post_id, comment.id), class: " p-0 m-1 text-white border-solid border-4 rounded-lg border-blue-400 bg-blue-400 hover:underline active:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 mb-8" %> 
-    
-  </p>
-
-</div>
+<%= turbo_frame_tag comment do %>
+  <div id="<%= dom_id comment %>">
+    <div class="shadow-xl mb-4 p-4">
+      <p>
+        <strong>Content:</strong>
+        <%= comment.content %>
+      </p>
+      <div class="flex flex-row">
+        <% if comment.user_id == current_user.id %>
+          <%= link_to "Edit", edit_post_comment_path(comment.post_id, comment), class: " p-0 m-1 text-white border-solid border-4 rounded-lg border-blue-400 bg-blue-400 hover:underline active:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 mb-8" %>
+          <%= button_to "Destroy", post_comment_path(comment.post_id, comment), method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } }, class: " p-0 m-1 text-white border-solid border-4 rounded-lg border-blue-400 bg-blue-400 hover:underline active:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 mb-8"%>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

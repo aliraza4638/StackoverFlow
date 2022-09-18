@@ -1,8 +1,9 @@
-class ApplicationController < ActionController::Base
-    before_action :authenticate_user!
+# frozen_string_literal: true
 
-    def content_not_found
-        raise ActionController::RoutingError.new('Not Found')
-    end
-      
+class ApplicationController < ActionController::Base
+  before_action :authenticate_user!
+
+  def content_not_found
+    raise ActionController::RoutingError, 'Not Found'
+  end
 end
