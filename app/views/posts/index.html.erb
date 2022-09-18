@@ -1,0 +1,19 @@
+<div>
+  <h2 class="font-medium leading-tight text-4xl mt-0 mb-2 text-blue-600">Posts</h2>
+
+
+  <div id="posts" class="border-solid border-4 rounded-lg border-blue-500 mb-6 overflow-y-auto h-80">
+    <% @posts.each do |post| %>
+      <div class="shadow-xl mb-6 p-1">
+      <%= render post %>
+      <p>
+        <%= link_to "Show", post, class: " p-0 m-1 text-white border-solid border-4 rounded-lg border-blue-400 bg-blue-400 hover:underline active:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 mb-8" %>
+      </p>
+    </div>
+    <% end %>
+  </div>
+
+  <div class="flex flex-row-reverse">
+    <%= link_to "New post", new_post_path, class: "p-1 text-white border-solid border-4 rounded-lg border-blue-500 bg-blue-500 hover:underline active:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 mb-8" %>
+  </div>
+</div>

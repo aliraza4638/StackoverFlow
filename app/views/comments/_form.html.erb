@@ -1,0 +1,25 @@
+<%= form_with(model: [ post, comment],
+       data: {controller: "reset-form", action: "turbo:submit-end->reset-form#reset"} ) do |form| %>
+  <% if comment.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+
+      <ul>
+        <% comment.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-6 shadow-xl">
+    <%= form.label :content, style: "display: block" %>
+    <%= form.text_area :content, style: "width: 100%" %>
+  </div>
+
+  <div class="flex flex-row-reverse ">
+    <div class="p-1 text-white border-solid border-4 rounded-lg border-blue-500 bg-blue-500 hover:bg-blue-600 active:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 mb-8" style="width: fit-content;">
+      <%= form.submit %>
+    </div>
+  </div>
+<% end %>

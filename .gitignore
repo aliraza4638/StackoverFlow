@@ -17,6 +17,8 @@
 !/log/.keep
 !/tmp/.keep
 
+/node_modules
+/yarn-error.log
 # Ignore pidfiles, but keep the directory.
 /tmp/pids/*
 !/tmp/pids/
@@ -33,3 +35,8 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+.env
+package-lock.json
+.idea
+“Gemfile.lock”
