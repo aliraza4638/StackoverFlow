@@ -19,6 +19,8 @@
 
 /node_modules
 /yarn-error.log
+/app/assets/builds
+
 # Ignore pidfiles, but keep the directory.
 /tmp/pids/*
 !/tmp/pids/
