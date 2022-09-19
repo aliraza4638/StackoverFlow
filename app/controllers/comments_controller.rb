@@ -7,6 +7,7 @@ class CommentsController < ApplicationController
   def index
     @post = Post.find(params[:post_id])
     @comments = @post.comments.all
+    authorize @comments
   end
 
   # GET /comments/1 or /comments/1.json
@@ -19,14 +20,14 @@ class CommentsController < ApplicationController
   def new
     @post = Post.find(params[:post_id])
     @comment = @post.comments.new
+    authorize @comment
   end
 
   # GET /comments/1/edit
   def edit
-    content_not_found if current_user.id != @comment.user_id
-
     @post = Post.find(params[:post_id])
     @comment = @post.comments.find(params[:id])
+    authorize @comment
   end
 
   # POST /comments or /comments.json
@@ -35,6 +36,7 @@ class CommentsController < ApplicationController
     @comment = @post.comments.new(comment_params)
 
     @comment.user_id = current_user.id
+    authorize @comment
 
     respond_to do |format|
       if @comment.save
@@ -49,6 +51,7 @@ class CommentsController < ApplicationController
 
   # PATCH/PUT /comments/1 or /comments/1.json
   def update
+    authorize @comment
     respond_to do |format|
       if @comment.update(comment_params)
         format.html { redirect_to post_path(params[:post_id]), notice: 'Comment was successfully updated.' }
@@ -60,13 +63,12 @@ class CommentsController < ApplicationController
 
   # DELETE /comments/1 or /comments/1.json
   def destroy
+    authorize @comment
     respond_to do |format|
-      begin
-        @comment.destroy!
-        format.html { redirect_to post_path(params[:post_id]), notice: 'Comment was successfully destroyed.' }
-      rescue
-        format.html { redirect_to post_path(params[:post_id]), alert: 'Comment was not destroyed.' }
-      end
+      @comment.destroy!
+      format.html { redirect_to post_path(params[:post_id]), notice: 'Comment was successfully destroyed.' }
+    rescue StandardError
+      format.html { redirect_to post_path(params[:post_id]), alert: 'Comment was not destroyed.' }
     end
   end
 

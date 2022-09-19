@@ -4,11 +4,11 @@
     <%= turbo_frame_tag "post" do %>
       <%= render @post %>
       <div class="flex flex-row">
-        <% if @post.user_id == current_user.id %>
+        <% if policy(@post).update? %>
           <%= link_to "Edit", edit_post_path(@post), class: "p-0 m-1 text-white border-solid border-4 rounded-lg border-blue-400 bg-blue-400 hover:underline active:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 mb-8" %>
         <% end %>
         <%= link_to "Back", posts_path, "data-turbo-frame": "_top", class: "p-0 m-1 text-white border-solid border-4 rounded-lg border-blue-400 bg-blue-400 hover:underline active:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 mb-8" %>
-        <% if @post.user_id == current_user.id %>
+        <% if policy(@post).destroy? %>
           <%= button_to "Destroy", @post, method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } }, "data-turbo-frame": "_top", class: " p-0 m-1 text-white border-solid border-4 rounded-lg border-blue-400 bg-blue-400 hover:underline active:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 mb-8" %>
         <%end%>
       </div>
