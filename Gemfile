@@ -74,6 +74,11 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
+  gem 'byebug', platform: :mri
+  gem 'rspec-rails', '~> 3.5'
+  gem "factory_bot_rails", "~> 4.8.2"
+  gem 'shoulda-matchers', '~> 4.5.1'
+  gem 'database_cleaner'
 end
 
 gem "tailwindcss-rails", "~> 2.0"
