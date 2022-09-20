@@ -1,0 +1,13 @@
+<div>
+
+  <h5 class="font-medium leading-tight text-4xl mt-0 mb-2 text-blue-600">Editing Comment</h5>
+  <%= turbo_frame_tag @comment do %>
+    <%= render "form", post: @post, comment: @comment %>
+  <% end %>
+  <br>
+
+  <div>
+    
+    <%= link_to "Back", post_path(@post),class: "p-0 m-1 text-white border-solid border-4 rounded-lg border-blue-400 bg-blue-400 hover:underline active:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 mb-8" %>
+  </div>
+</div>

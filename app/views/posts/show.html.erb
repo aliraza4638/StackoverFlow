@@ -1,0 +1,35 @@
+<%= turbo_stream_from @post %>
+<div>
+  <div class="mb-10 shadow-xl p-1" >
+    <%= turbo_frame_tag "post" do %>
+      <%= render @post %>
+      <div class="flex flex-row">
+        <% if policy(@post).update? %>
+          <%= link_to "Edit", edit_post_path(@post), class: "p-0 m-1 text-white border-solid border-4 rounded-lg border-blue-400 bg-blue-400 hover:underline active:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 mb-8" %>
+        <% end %>
+        <%= link_to "Back", posts_path, "data-turbo-frame": "_top", class: "p-0 m-1 text-white border-solid border-4 rounded-lg border-blue-400 bg-blue-400 hover:underline active:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 mb-8" %>
+        <% if policy(@post).destroy? %>
+          <%= button_to "Destroy", @post, method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } }, "data-turbo-frame": "_top", class: " p-0 m-1 text-white border-solid border-4 rounded-lg border-blue-400 bg-blue-400 hover:underline active:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 mb-8" %>
+        <%end%>
+      </div>
+      
+    <% end %>
+  </div>
+  <h5 class="font-medium leading-tight text-4xl mt-0 mb-2 text-blue-600">Comments</h5>
+  <div class="overflow-y-auto h-80 shadow-xl border-solid border-4 rounded-lg border-blue-500">
+    <div id="comments">
+      <% @comment.each do |comm| %>
+          <%= render comm %>
+      <%end%>
+    </div>
+  </div>
+  <div>
+    <br><br>
+    <h5 class="font-medium leading-tight text-4xl mt-0 mb-2 text-blue-600">Add New Comment</h5>
+    <div class="">
+      <%= turbo_frame_tag "new_comment", src: new_post_comment_path(@post), target: "_top" do %>
+        Content will be replaced when /feed has been loaded.
+      <% end %>
+    </div>
+  </div>
+</div>
