@@ -42,3 +42,5 @@
 package-lock.json
 .idea
 “Gemfile.lock”
+
+.byebug_history

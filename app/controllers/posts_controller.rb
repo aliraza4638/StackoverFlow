@@ -35,7 +35,7 @@ class PostsController < ApplicationController
       if @post.save
         format.html { redirect_to post_url(@post), notice: 'Post was successfully created.' }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { redirect_to post_url(@post), alert: "Post was not created. #{@post.errors.full_messages}" }
       end
     end
   end
@@ -47,7 +47,7 @@ class PostsController < ApplicationController
       if @post.update(post_params)
         format.html { redirect_to post_url(@post), notice: 'Post was successfully updated.' }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { redirect_to post_url(@post), alert: "Post was not updated. #{@post.errors.full_messages}" }
       end
     end
   end
@@ -57,9 +57,11 @@ class PostsController < ApplicationController
     authorize @post
     respond_to do |format|
       @post.destroy!
-      format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
-    rescue StandardError
-      format.html { redirect_to posts_url, alert: 'Post was not destroyed.' }
+      if @post.destroyed?
+        format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
+      else
+        format.html { redirect_to posts_url, alert: "Post was not destroyed. #{@post.errors.full_messages}" }
+      end
     end
   end
 

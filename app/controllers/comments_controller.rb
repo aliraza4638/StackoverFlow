@@ -40,11 +40,10 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.save
-
         format.turbo_stream
         format.html { redirect_to post_path(params[:post_id]), notice: 'Comment was successfully created.' }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { redirect_to post_path(params[:post_id]), alert: "Comment was not created. #{@comment.errors.full_messages}" }
       end
     end
   end
@@ -56,7 +55,7 @@ class CommentsController < ApplicationController
       if @comment.update(comment_params)
         format.html { redirect_to post_path(params[:post_id]), notice: 'Comment was successfully updated.' }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { redirect_to post_path(params[:post_id]), alert: "Comment was not created. #{@comment.errors.full_messages}" }
       end
     end
   end
@@ -65,10 +64,12 @@ class CommentsController < ApplicationController
   def destroy
     authorize @comment
     respond_to do |format|
-      @comment.destroy!
+     @comment.destroy!
+     if @comment.destroyed?
       format.html { redirect_to post_path(params[:post_id]), notice: 'Comment was successfully destroyed.' }
-    rescue StandardError
-      format.html { redirect_to post_path(params[:post_id]), alert: 'Comment was not destroyed.' }
+     else
+      format.html { redirect_to post_path(params[:post_id]), alert: "Comment was not destroyed. #{@comment.errors.full_messages}" }
+     end
     end
   end
 
